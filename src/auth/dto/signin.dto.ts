@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsStrongPassword, isStrongPassword } from "class-validator";
+import { IsNotEmpty, IsString} from "class-validator";
 
 
 export default class SignInDto {
@@ -11,6 +11,4 @@ export default class SignInDto {
     @IsNotEmpty()
     @IsString()
     password: string
-
-
 }

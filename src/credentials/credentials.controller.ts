@@ -7,12 +7,12 @@ import { UpdateCredentialDto } from './dto/update-credential.dto';
 export class CredentialsController {
   constructor(private readonly credentialsService: CredentialsService) {}
 
-  @Post()
+  @Post("/credentials")
   create(@Body() createCredentialDto: CreateCredentialDto) {
     return this.credentialsService.create(createCredentialDto);
   }
 
-  @Get()
+  @Get("/credentials")
   findAll() {
     return this.credentialsService.findAll();
   }
@@ -22,11 +22,7 @@ export class CredentialsController {
     return this.credentialsService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCredentialDto: UpdateCredentialDto) {
-    return this.credentialsService.update(+id, updateCredentialDto);
-  }
-
+  
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.credentialsService.remove(+id);
