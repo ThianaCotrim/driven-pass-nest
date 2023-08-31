@@ -9,6 +9,7 @@ export class CredentialsService {
 
   constructor(private readonly repository: CredentialsRepository){ }
 
+
   async create(createCredentialDto: CreateCredentialDto) {
     const {title, url, username, password} = createCredentialDto
     if(!title || !url || !username || !password) throw new BadGatewayException("Todos os campos são obrigatórios")
@@ -20,10 +21,12 @@ export class CredentialsService {
     return this.repository.create(createCredentialDto)
   }
 
+
   async findAll() {
 
     return await this.repository.findAll()
   }
+
 
   async findOne(id: number) {
     const credential = await this.repository.findOne(id)
@@ -40,6 +43,6 @@ export class CredentialsService {
     if(!credential) throw new NotFoundException();
 
     // Se o usuário procurar por uma credencial que não é dele (403 Forbidden) 
-    return credential
+    return this.repository.remove(id)
   }
 }

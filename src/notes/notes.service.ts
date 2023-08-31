@@ -1,26 +1,46 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
+import { NotesRepository } from './notes.repository';
 
 @Injectable()
+
 export class NotesService {
-  create(createNoteDto: CreateNoteDto) {
-    return 'This action adds a new note';
+
+  constructor(private readonly repository: NotesRepository){ }
+  
+
+  async create(createNoteDto: CreateNoteDto) {
+    const {title, text} = createNoteDto
+    if(!title || !text) throw new BadRequestException("Todos os campos são obrigatórios")
+
+    const ExistTitle = await this.repository.getTitle(title)
+    if(ExistTitle) throw new ConflictException("Esse título já existe")
+
+    return this.repository.create(createNoteDto)
   }
 
-  findAll() {
-    return `This action returns all notes`;
+
+  async findAll() {
+    return await this.repository.findAll()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} note`;
+
+  async findOne(id: number) {
+      const credential = await this.repository.findOne(id)
+    if (!credential) throw new NotFoundException();
+    
+    // Se o usuário procurar por uma credencial que não é dele (403 Forbidden) 
+
+    return credential
   }
 
-  update(id: number, updateNoteDto: UpdateNoteDto) {
-    return `This action updates a #${id} note`;
-  }
 
-  remove(id: number) {
-    return `This action removes a #${id} note`;
+  async remove(id: number) {
+    const notes = await this.repository.findOne(id)
+    if(!notes) throw new NotFoundException();
+
+    // Se o usuário procurar por uma credencial que não é dele (403 Forbidden) 
+    return this.repository.remove(id)
   }
 }

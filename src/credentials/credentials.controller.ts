@@ -5,18 +5,22 @@ import { UpdateCredentialDto } from './dto/update-credential.dto';
 
 @Controller('credentials')
 export class CredentialsController {
+
   constructor(private readonly credentialsService: CredentialsService) {}
 
-  @Post("/credentials")
+
+  @Post()
   create(@Body() createCredentialDto: CreateCredentialDto) {
     return this.credentialsService.create(createCredentialDto);
   }
 
-  @Get("/credentials")
+
+  @Get()
   findAll() {
     return this.credentialsService.findAll();
   }
 
+  
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.credentialsService.findOne(+id);
