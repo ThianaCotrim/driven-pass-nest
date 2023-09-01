@@ -32,6 +32,6 @@ export class CardsRepository {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} card`;
+    return this.prisma.card.delete({where: {id}})
   }
 }

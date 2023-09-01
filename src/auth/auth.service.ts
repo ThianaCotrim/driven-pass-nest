@@ -3,7 +3,6 @@ import SignUpDto from './dto/signup.dto';
 import SignInDto from './dto/signin.dto';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from "bcrypt"
-import { UsersRepository } from 'src/users/users.repository';
 import { User } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
 
@@ -44,6 +43,18 @@ export class AuthService {
             issuer: this.ISSUER,
             audience: this.AUDIENCIE
         })
-        return { token }
+        return token 
     }
+
+    checkToken(token: string){
+        const chaveSecreta = "nest"
+        const data = this.jwtService.verify(token,{
+            secret: chaveSecreta,
+            audience: this.AUDIENCIE,
+            issuer: this.ISSUER
+        })
+
+        return data
+    }
+
 }
