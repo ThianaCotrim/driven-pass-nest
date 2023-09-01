@@ -27,12 +27,12 @@ export class NotesService {
 
 
   async findOne(id: number) {
-      const credential = await this.repository.findOne(id)
-    if (!credential) throw new NotFoundException();
+      const notes = await this.repository.findOne(id)
+    if (!notes) throw new NotFoundException();
     
     // Se o usuário procurar por uma credencial que não é dele (403 Forbidden) 
 
-    return credential
+    return notes
   }
 
 

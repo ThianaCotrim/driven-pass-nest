@@ -39,3 +39,18 @@ model Note {
   @@unique([text])
   @@map("note")
 }
+
+model Card{
+  id Int @id @default(autoincrement())
+  title String
+  number String
+  name String
+  cvv String
+  expiration String
+  password String
+  virtual String
+  type String
+
+  @@unique([title, number])
+  @@map("cards")
+}

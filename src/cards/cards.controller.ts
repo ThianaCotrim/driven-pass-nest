@@ -8,8 +8,8 @@ export class CardsController {
   constructor(private readonly cardsService: CardsService) {}
 
   @Post()
-  create(@Body() createCardDto: CreateCardDto) {
-    return this.cardsService.create(createCardDto);
+  async create(@Body() createCardDto: CreateCardDto) {
+    return await this.cardsService.create(createCardDto);
   }
 
   @Get()
@@ -22,10 +22,6 @@ export class CardsController {
     return this.cardsService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCardDto: UpdateCardDto) {
-    return this.cardsService.update(+id, updateCardDto);
-  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
