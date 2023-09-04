@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { CredentialsService } from './credentials.service';
 import { CredentialsController } from './credentials.controller';
 import { CredentialsRepository } from './credentials.repository';
-import { AuthService } from 'src/auth/auth.service';
-import { UsersService } from 'src/users/users.service';
+import { AuthService } from '../auth/auth.service';
+import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { UsersRepository } from 'src/users/users.repository';
+import { UsersRepository } from '../users/users.repository';
 
 @Module({
   controllers: [CredentialsController],

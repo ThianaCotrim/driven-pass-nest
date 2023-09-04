@@ -1,10 +1,11 @@
-import { BadGatewayException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadGatewayException, ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCredentialDto } from './dto/create-credential.dto';
 import { CredentialsRepository } from './credentials.repository';
 
 
 @Injectable()
 export class CredentialsService {
+  private readonly cryptr: any;
 
   constructor(private readonly repository: CredentialsRepository){ }
 
@@ -24,24 +25,26 @@ export class CredentialsService {
   async findAll() {
 
     return await this.repository.findAll()
+
   }
 
 
   async findOne(id: number) {
+
     const credential = await this.repository.findOne(id)
     if (!credential) throw new NotFoundException();
-    
-    // Se o usuário procurar por uma credencial que não é dele (403 Forbidden) 
 
-    return credential
+    return await this.repository.findOne(id)
   }
 
 
   async remove(id: number) {
+
+
     const credential = await this.repository.findOne(id)
     if(!credential) throw new NotFoundException();
 
-    // Se o usuário procurar por uma credencial que não é dele (403 Forbidden) 
+
     return this.repository.remove(id)
   }
 }

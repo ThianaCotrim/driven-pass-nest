@@ -1,9 +1,12 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { NotesService } from './notes.service';
 import { CreateNoteDto } from './dto/create-note.dto';
-import { AuthGuard } from 'src/guards/auth.guard';
+import { AuthGuard } from '../guards/auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AuthGuard)
+@ApiTags("Notes")
+@ApiBearerAuth()
 @Controller('notes')
 export class NotesController {
   constructor(private readonly notesService: NotesService) {}

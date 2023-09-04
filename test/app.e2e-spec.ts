@@ -1,10 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { HttpStatus, INestApplication } from '@nestjs/common';
+import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
+import { PrismaService } from '../src/prisma/prisma.service';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
+  let prisma: PrismaService;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -12,7 +14,9 @@ describe('AppController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    app.useGlobalPipes(new ValidationPipe())
     await app.init();
+
   });
 
   it('GET /health => should return 200', () => {
@@ -21,4 +25,5 @@ describe('AppController (e2e)', () => {
       .expect(HttpStatus.OK)
       .expect("I'm okay!");
   });
+
 });

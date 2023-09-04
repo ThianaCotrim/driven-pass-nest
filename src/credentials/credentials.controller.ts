@@ -1,11 +1,13 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { CredentialsService } from './credentials.service';
 import { CreateCredentialDto } from './dto/create-credential.dto';
-import { UpdateCredentialDto } from './dto/update-credential.dto';
-import { AuthGuard } from 'src/guards/auth.guard';
+import { AuthGuard } from '../guards/auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 
 @UseGuards(AuthGuard)
+@ApiTags("Credentials")
+@ApiBearerAuth()
 @Controller('credentials')
 export class CredentialsController {
 
